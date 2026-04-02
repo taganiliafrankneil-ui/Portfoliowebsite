@@ -1,0 +1,333 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ hero.name|default:"Frank Neil Taganili" }} – Graphic Designer{% endblock %}
+
+{% block content %}
+
+<!-- ═══════════════════════════════════════════════
+     § 1  HERO — Diagonal split layout
+═══════════════════════════════════════════════ -->
+<section id="home" class="hero-section">
+
+  <!-- Parallax bg layer -->
+  <div class="hero-parallax-bg" data-parallax="0.4"></div>
+
+  <!-- Side rotated label -->
+  <div class="hero-side-label" aria-hidden="true">Portfolio · {{ hero.name|default:"Frank Neil Taganili" }} · 2024</div>
+
+  <div class="hero-split">
+
+    <!-- Left: Text -->
+    <div class="hero-text-col">
+      <span class="hero-eyebrow">{{ hero.title|default:"Graphic Designer" }}</span>
+
+      <h1 class="hero-name">
+        <span class="hero-name__word">{{ hero.name|default:"Frank Neil Taganili" }}</span>
+      </h1>
+
+      <p class="hero-tagline">{{ hero.tagline|default:"Crafting visuals that speak louder than words." }}</p>
+
+      <div class="hero-cta-row">
+        <a href="#portfolio" class="btn-hero">
+          {{ hero.cta_button_text|default:"View My Work" }}
+        </a>
+        <span class="hero-divider" aria-hidden="true"></span>
+        <a href="#contact" class="hero-link-secondary">Get in touch</a>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="hero-scroll-indicator" aria-hidden="true">
+        <div class="hero-scroll-line"></div>
+        <span>Scroll</span>
+      </div>
+    </div>
+
+    <!-- Right: Diagonal image panel -->
+    <div class="hero-img-col">
+      {% if hero.profile_image %}
+        <img src="{{ hero.profile_image.url }}"
+             alt="{{ hero.name|default:'Frank Neil Taganili' }}"
+             class="hero-img" data-parallax="0.2" />
+      {% else %}
+        <div class="hero-img-placeholder">
+          <span class="hero-img-initials">FN</span>
+        </div>
+      {% endif %}
+      <!-- Floating badge -->
+      <div class="hero-badge">
+        <span class="hero-badge__top">Available for</span>
+        <strong class="hero-badge__main">Freelance</strong>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom ticker bar -->
+  <div class="hero-ticker">
+    <div class="hero-ticker__track">
+      <span>Graphic Design</span>
+      <span class="ticker-dot" aria-hidden="true">·</span>
+      <span>UI Design</span>
+      <span class="ticker-dot" aria-hidden="true">·</span>
+      <span>Digital Arts</span>
+      <span class="ticker-dot" aria-hidden="true">·</span>
+      <span>Branding</span>
+      <span class="ticker-dot" aria-hidden="true">·</span>
+      <span>Typography</span>
+      <span class="ticker-dot" aria-hidden="true">·</span>
+      <span>IT Student</span>
+      <span class="ticker-dot" aria-hidden="true">·</span>
+      <span>Graphic Design</span>
+      <span class="ticker-dot" aria-hidden="true">·</span>
+      <span>UI Design</span>
+      <span class="ticker-dot" aria-hidden="true">·</span>
+      <span>Digital Arts</span>
+      <span class="ticker-dot" aria-hidden="true">·</span>
+      <span>Branding</span>
+      <span class="ticker-dot" aria-hidden="true">·</span>
+      <span>Typography</span>
+      <span class="ticker-dot" aria-hidden="true">·</span>
+      <span>IT Student</span>
+      <span class="ticker-dot" aria-hidden="true">·</span>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     § 2  ABOUT — Full-width text, large quote,
+           stats row, no image
+═══════════════════════════════════════════════ -->
+<section id="about" class="about-section section-pad">
+  <div class="container">
+
+    <div class="about-top fade-in-up">
+      <div class="section-label">About Me</div>
+      <div class="about-number" aria-hidden="true">02</div>
+    </div>
+
+    <!-- Large quote bio -->
+    <blockquote class="about-quote fade-in-up">
+      <span class="about-quote__mark" aria-hidden="true">"</span>
+      {{ about.bio|default:"An IT student and graphic designer passionate about visual storytelling — merging code and creativity to build experiences that are both functional and beautiful." }}
+    </blockquote>
+
+    <!-- Horizontal rule -->
+    <div class="about-rule fade-in-up" aria-hidden="true"></div>
+
+    <!-- Stats + CTA row -->
+    <div class="about-bottom fade-in-up">
+
+      <div class="about-stats">
+        <div class="about-stat">
+          <span class="about-stat__val">3rd</span>
+          <span class="about-stat__label">Year Level</span>
+        </div>
+        <div class="about-stat">
+          <span class="about-stat__val">BSINT</span>
+          <span class="about-stat__label">Course</span>
+        </div>
+
+      <a href="#contact" class="btn-outline-green">
+        Get In Touch <i class="fa-solid fa-arrow-right fa-sm ms-2"></i>
+      </a>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     § 3  PORTFOLIO — Full-image grid, hover reveal
+═══════════════════════════════════════════════ -->
+<section id="portfolio" class="portfolio-section section-pad">
+  <div class="container">
+
+    <div class="portfolio-header fade-in-up">
+      <div>
+        <div class="section-label">Selected Work</div>
+        <h2 class="section-heading">My Projects</h2>
+      </div>
+      <div class="portfolio-count" aria-hidden="true">
+        {% if projects %}{{ projects|length }}{% else %}03{% endif %}
+      </div>
+    </div>
+
+    <div class="portfolio-grid mt-5">
+
+      {% if projects %}
+        {% for project in projects %}
+        <div class="project-card fade-in-up" style="animation-delay:{{ forloop.counter0 }}00ms;">
+          <!-- Full image -->
+          <div class="project-img-wrap">
+            {% if project.image %}
+              <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-img" />
+            {% else %}
+              <div class="project-img-placeholder">
+                <i class="fa-regular fa-image"></i>
+              </div>
+            {% endif %}
+
+            <!-- Hover overlay — title + desc revealed on hover -->
+            <div class="project-overlay">
+              <div class="project-overlay__inner">
+                <span class="project-overlay__num">0{{ forloop.counter }}</span>
+                <h5 class="project-overlay__title">{{ project.title }}</h5>
+                <p class="project-overlay__desc">{{ project.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+      {% else %}
+        {% for i in "123" %}
+        <div class="project-card fade-in-up">
+          <div class="project-img-wrap">
+            <div class="project-img-placeholder">
+              <i class="fa-regular fa-image"></i>
+            </div>
+            <div class="project-overlay">
+              <div class="project-overlay__inner">
+                <span class="project-overlay__num">0{{ forloop.counter }}</span>
+                <h5 class="project-overlay__title">Project Title</h5>
+                <p class="project-overlay__desc">Short description of the project goes here.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      {% endif %}
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     § 4  EDUCATION
+═══════════════════════════════════════════════ -->
+<section id="education" class="education-section section-pad">
+  <div class="container">
+
+    <div class="education-header fade-in-up">
+      <div class="section-label">Background</div>
+      <h2 class="section-heading">Education</h2>
+    </div>
+
+    <div class="edu-card fade-in-up mt-5">
+
+      <div class="edu-accent-col">
+        <div class="edu-year-badge">
+          {{ education.year_level|default:"3rd Year" }}
+        </div>
+        <div class="edu-accent-line" aria-hidden="true"></div>
+        <i class="fa-solid fa-graduation-cap edu-icon"></i>
+      </div>
+
+      <div class="edu-main-col">
+        <p class="edu-school">
+          {{ education.school_name|default:"Negros Oriental State University Bayawan-Sta. Catalina Campus" }}
+        </p>
+        <h3 class="edu-course">
+          {{ education.course|default:"Bachelor of Science in Information Technology" }}
+        </h3>
+        <p class="edu-desc">
+          {{ education.description|default:"An IT student with a strong passion for graphic design and digital arts, combining technical skills with creativity to produce visually engaging designs." }}
+        </p>
+      </div>
+
+      <div class="edu-name-col">
+        <span class="edu-name-vertical">
+          {{ education.student_name|default:"Frank Neil Taganili" }}
+        </span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     § 5  SKILLS
+═══════════════════════════════════════════════ -->
+<section id="skills" class="skills-section section-pad">
+  <div class="container">
+
+    <div class="skills-header fade-in-up">
+      <div class="section-label">Expertise</div>
+      <h2 class="section-heading">My Skills</h2>
+    </div>
+
+    <div class="skills-body mt-5">
+
+      <div class="skills-category-label fade-in-left">
+        <span>Design</span>
+        <span>&</span>
+        <span>Tech</span>
+      </div>
+
+      <div class="skills-pills-wrap fade-in-right">
+        {% if skills %}
+          {% for skill in skills %}
+          <div class="skill-pill">
+            {% if skill.icon_class %}
+              <i class="{{ skill.icon_class }} skill-pill__icon"></i>
+            {% else %}
+              <i class="fa-solid fa-circle-dot skill-pill__icon"></i>
+            {% endif %}
+            <span class="skill-pill__name">{{ skill.name }}</span>
+          </div>
+          {% endfor %}
+        {% else %}
+          {% for item in "123456789" %}
+          <div class="skill-pill">
+            <i class="fa-solid fa-circle-dot skill-pill__icon"></i>
+            <span class="skill-pill__name">Skill</span>
+          </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     § 6  CONTACT
+═══════════════════════════════════════════════ -->
+<section id="contact" class="contact-section section-pad">
+  <div class="container">
+
+    <div class="contact-inner fade-in-up">
+      <div class="section-label">Say Hello</div>
+      <h2 class="contact-headline">Let's Work<br><em>Together</em></h2>
+
+      <a href="mailto:{{ contact.email|default:'frankneiltaag@email.com' }}" class="contact-email-link">
+        {{ contact.email|default:"frankneiltaag@email.com" }}
+      </a>
+
+      <div class="contact-divider" aria-hidden="true"></div>
+
+      <div class="contact-socials">
+        <a href="{{ contact.facebook_url|default:'https://facebook.com/' }}" target="_blank" rel="noopener" class="contact-social-btn">
+          <i class="fa-brands fa-facebook"></i>
+          <span>Facebook</span>
+        </a>
+        <span class="contact-social-sep" aria-hidden="true">·</span>
+        <a href="{{ contact.instagram_url|default:'https://instagram.com/' }}" target="_blank" rel="noopener" class="contact-social-btn">
+          <i class="fa-brands fa-instagram"></i>
+          <span>Instagram</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}
