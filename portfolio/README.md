@@ -8,7 +8,7 @@ Built with **Django**, **Bootstrap 5**, and a custom pink editorial design theme
 ## 📁 Project Structure
 
 ```
-FrankPortfolio/
+Portfoliowebsite/
 ├── .venv/                        # Virtual environment
 ├── portfolio/                    # Django project folder
 │   ├── settings.py               # Project settings
